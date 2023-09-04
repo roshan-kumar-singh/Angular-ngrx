@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import {Store}  from '@ngrx/store'
 
 @Component({
   selector: 'app-counter-output',
@@ -6,5 +7,12 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./counter-output.component.css']
 })
 export class CounterOutputComponent {
-  @Input() counter: any;
+  counter: any;
+  constructor(private store: Store<{counter:{counter:number}}>){}
+  
+  ngOnInit() {
+    this.store.select('counter').subscribe(data=>{
+      this.counter = data.counter;
+    })
+  }
 }
